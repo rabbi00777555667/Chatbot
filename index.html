@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatApp - Real-Time Chat</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Firebase SDKs -->
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+      import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+      import { getFirestore, doc, setDoc, getDoc, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+      import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-storage.js";
+      
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyDSr7YpMTxGrgVzsAEk92d6dfqEmjwWw3Q",
+        authDomain: "chatapp-caa45.firebaseapp.com",
+        projectId: "chatapp-caa45",
+        storageBucket: "chatapp-caa45.appspot.com",
+        messagingSenderId: "591274952461",
+        appId: "1:591274952461:web:5ebf447081a6bf9776d244"
+      };
+    
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const db = getFirestore(app);
+      const storage = getStorage(app);
+      
+      // Expose Firebase services to the global scope for use in script.js
+      window.firebaseApp = app;
+      window.firebaseAuth = auth;
+      window.firebaseDB = db;
+      window.firebaseStorage = storage;
+    </script>
+</head>
+<body>
+    <!-- Authentication Container -->
+    <div id="auth-container" class="auth-container">
+        <div class="auth-box">
+            <h2 id="auth-title">Login</h2>
+            <form id="auth-form">
+                <div id="name-field" class="form-group hidden">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" placeholder="Your Name" class="auth-input">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="Email" required class="auth-input">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Password" required class="auth-input">
+                </div>
+                <div id="avatar-field" class="form-group hidden">
+                    <label for="avatar">Avatar</label>
+                    <input type="file" id="avatar" accept="image/*" class="auth-input">
+                </div>
+                <button type="submit" class="btn" id="auth-button">Login</button>
+            </form>
+            <p id="toggle-auth">Don't have an account? <span id="toggle-link">Register</span></p>
+            <p id="auth-error" class="auth-error"></p>
+            <p id="auth-success" class="auth-success hidden"></p>
+        </div>
+    </div>
+    
+    <!-- Chat Interface -->
+    <div id="chat-container" class="chat-container hidden">
+        <header class="chat-header">
+            <h2>Chat Room</h2>
+            <button id="logout-btn" class="logout-btn"><i class="fas fa-sign-out-alt"></i></button>
+        </header>
+        <div id="messages" class="messages"></div>
+        <form id="message-form" class="message-form">
+            <input type="text" id="message-input" placeholder="Type your message..." autocomplete="off" required>
+            <button type="submit" class="send-btn"><i class="fas fa-paper-plane"></i></button>
+        </form>
+    </div>
+    
+    <!-- JavaScript -->
+    <script type="module" src="script.js"></script>
+</body>
+</html>
